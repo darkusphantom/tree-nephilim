@@ -15,4 +15,15 @@ void showElementsInList(list<T> &linkedList) {
 	}
 }
 
+string convertToUpper(string word) {
+	string convertWord;
+	convertWord = word;
+
+	for (int i = 0; i < word.length(); ++i) {
+		convertWord[i] = toupper(word[i]);
+	}
+
+	return convertWord;
+}
+
 #endif

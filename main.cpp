@@ -32,6 +32,37 @@ void getDataInitialAndEnd(list<T> &linkedList) {
   nodeEnding = dataInitialAndEnd[1];
 }
 
+template <typename T>
+void getDataToInsertInTree(list<T> &linkedList, int numberTestCase) {
+  string inorden, preorden, postorden;
+  string inordenChar="INORDEN", preordenChar="PREORDEN", postordenChar="POSTORDEN";
+  list<T> list1, list2;
+
+  inorden = inordenChar.length();
+  preorden = preordenChar.length();
+  postorden = postordenChar.length();
+
+  int iterator=0;
+  while(iterator <= numberTestCase) {
+    string dataFront = linkedList.front();
+
+    if (iterator == 0) {
+      list1.push_back(dataFront);
+    }
+    else if (iterator == 1) {
+      list2.push_back(dataFront);
+    } else {
+      linkedList.pop_front();
+    }
+    linkedList.pop_front();
+    iterator++;
+  }
+
+  // showElementsInList(list1);
+  // showElementsInList(list2);
+  showElementsInList(linkedList);
+}
+
 int main() {
   list<string> dataList;
   readFileToSaveOnList(dataList);
@@ -41,6 +72,7 @@ int main() {
   dataList.pop_front();
 
   getDataInitialAndEnd(dataList);
+  getDataToInsertInTree(dataList, numberTestCase);
 
   return 0;
 }
