@@ -12,67 +12,62 @@ void extraerEntradas(string principalString, string& initialNode, string& ending
   endingNode = principalString.substr(amountPositionToSeparte + 1);
 }
 
-void extraerLista(string cadenaDeLista, list<string> &listaParaArbol, string &typeRecorridoTree) {
-  int contEspacio = cadenaDeLista.find(" ");
+void extraerLista(string filelineData, list<string> &linkedListToTree, string &typeRecorridoTree) {
+  int amountSpace = filelineData.find(" ");
   int nextElement = 0;
 
-  typeRecorridoTree = cadenaDeLista.substr(0, contEspacio);
-  nextElement = contEspacio + 1;
-  contEspacio = cadenaDeLista.find(" ", nextElement);
+  typeRecorridoTree = filelineData.substr(0, amountSpace);
+  nextElement = amountSpace + 1;
+  amountSpace = filelineData.find(" ", nextElement);
 
-  while(contEspacio != -1) {
-    //cout << "(" << cadenaDeLista.substr(nextElement, nextElement + contEspacio) << ")";
-    //string element =
-    listaParaArbol.push_back(cadenaDeLista.substr(nextElement, contEspacio - nextElement));// obtenemos un elemento de la lista
-    nextElement = contEspacio + 1;
-    contEspacio = cadenaDeLista.find(" ", nextElement);
+  while(amountSpace != -1) {
+    linkedListToTree.push_back(filelineData.substr(nextElement, amountSpace - nextElement));
+    nextElement = amountSpace + 1;
+    amountSpace = filelineData.find(" ", nextElement);
+  }
+}
+
+void readData(list<string> &originalList) {
+  int testCase;
+
+  // cout << "Ingrese la cantidad de casos de prueba:" << endl;
+  // cin >> testCase;
+  // cin.ignore();
+  // cout << "\n";
+
+  string fileline, filelineData;
+  string initialNode, endingNode;
+  list<string> secundaryList;
+
+  int counter; //counter < testcase
+  for (counter = 0; counter < 2; counter++) {
+    cout << "Ingrese el punto de partida y el punto final del recorrido:" << endl;
+    getline(cin, fileline);
+    extraerEntradas(fileline, initialNode, endingNode);
+    cout << "\n";
+
+    for (int i = 0; i < 2; ++i) {
+      string typeRecorrido;
+      cout << "Ingrese una el tipo de recorrido y los datos añadir a la lista:" << endl;
+      getline(cin, fileline);
+      extraerLista(filelineData, originalList, typeRecorrido);
+      secundaryList.push_back(typeRecorrido);
+      cout << "\n";
+    }
+
+    showElementsInList(originalList);
+    showElementsInList(secundaryList);
+    cout << "\n";
   }
 }
 
 
 
 int main() {
-  int testCase;
+  list<string> inputList;
 
-  cout << "Ingrese la cantidad de casos de prueba:" << endl;
-  cin >> testCase;
-  cin.ignore();
-  cout << "\n";
+  readData(inputList);
 
-  string elementInput, listInput;
-  string initialNode, endingNode, aux;
-  list<string> secundaryList, firstList;
-
-  int contador;
-  for (contador = 1; contador <= testCase; contador++) {
-    cout << "Ingrese el punto de partida y el punto final del recorrido:" << endl;
-    getline(cin, elementInput);
-    extraerEntradas(elementInput, initialNode, endingNode);
-    cout << "\n";
-
-    string firstTypeRecorrido;
-    cout << "Ingresa la primera lista con el tipo de recorrido y la cantidad de nodos:" << endl;
-    getline(cin, elementInput);
-    extraerLista(listInput, firstList, firstTypeRecorrido);
-    cout << "\n";
-
-    string secundaryTypeRecorrido;
-    cout << "Ingresa la segunda lista con el tipo de recorrido y la cantidad de nodos:" << endl;
-    getline(cin, listInput);
-    extraerLista(listInput, secundaryList, secundaryTypeRecorrido);
-    cout << "\n";
-
-    cout << "Presione enter para continuar:" << endl;
-    getline(cin, elementInput);
-
-    //Testing
-    cout << initialNode << " "<< endingNode << endl;
-    cout << firstTypeRecorrido <<  " " << firstList.front() << endl;
-    cout << secundaryTypeRecorrido << secundaryList.front() << endl;
-
-
-    cout << "\n";
-  }
   return 0;
 }
 
