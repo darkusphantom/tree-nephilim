@@ -7,6 +7,7 @@
 using namespace std;
 
 string nodeInitial, nodeEnding;
+list<string> linkedFinal;
 
 template <typename T>
 void getDataInitialAndEnd(list<T> &linkedList) {
@@ -33,6 +34,19 @@ void getDataInitialAndEnd(list<T> &linkedList) {
 }
 
 template <typename T>
+void setTree(list<T> &linkedList1, list<T> &linkedList2) {
+  ArbolBinario<string> *humanTree = new ArbolBinario<string>;
+  list<string> lista;
+
+  showElementsInList(linkedList1);
+
+  humanTree->preordenInorden(linkedList1, linkedList2);
+
+  cout << humanTree->peso() << endl;
+}
+
+
+template <typename T>
 void getDataToInsertInTree(list<T> &linkedList, int numberTestCase) {
   string inorden, preorden, postorden;
   string inordenChar="INORDEN", preordenChar="PREORDEN", postordenChar="POSTORDEN";
@@ -42,8 +56,7 @@ void getDataToInsertInTree(list<T> &linkedList, int numberTestCase) {
   preorden = preordenChar.length();
   postorden = postordenChar.length();
 
-  int iterator=0;
-  while(iterator <= numberTestCase) {
+  for (int iterator = 0; iterator < linkedList.size(); ++iterator) {
     string dataFront = linkedList.front();
 
     if (iterator == 0) {
@@ -55,12 +68,9 @@ void getDataToInsertInTree(list<T> &linkedList, int numberTestCase) {
       linkedList.pop_front();
     }
     linkedList.pop_front();
-    iterator++;
   }
 
-  // showElementsInList(list1);
-  // showElementsInList(list2);
-  showElementsInList(linkedList);
+  setTree(list1, list2);
 }
 
 int main() {
@@ -76,5 +86,3 @@ int main() {
 
   return 0;
 }
-
-// ArbolBinario<string> *humanTree = new ArbolBinario<string>;
