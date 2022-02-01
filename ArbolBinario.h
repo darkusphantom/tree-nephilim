@@ -97,7 +97,7 @@ class ArbolBinario
 
 		void surdo( NodoA<tipo>* nodoActual, bool &esSurdo );//recorre y compara la altura de las ramas para saber si el arbol es surdo
 
-		int calculatePath(Nodo<tipo>* raiz, Nodo<tipo>* puntoInicial, Nodo<tipo>* puntoFinal, bool estaCompletado) {
+		int calculatePath(NodoA<tipo>* raiz, NodoA<tipo>* puntoInicial, NodoA<tipo>* puntoFinal, bool estaCompletado) {
 			int valor;
 
 			if(raiz == puntoInicial || raiz == puntoFinal) {

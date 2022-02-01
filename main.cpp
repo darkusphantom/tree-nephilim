@@ -83,10 +83,10 @@ float getNSE(int initialPoint, int endPoint, ArbolBinario<string> nephilimTree) 
   float valueNSE;
   bool isComplete=false;
 
-  return valueNSE = nephilimTree->calculatePath(nephilimTree->raiz, initialPoint, endPoint, isComplete);
+  // return valueNSE = nephilimTree->calculatePath(nephilimTree->raiz, initialPoint, endPoint, isComplete);
 }
 
-void calculateNSE() {
+void calculateNSE(int numberTestCase) {
   int counter=0;
 
   while(counter < numberTestCase) {
@@ -114,8 +114,8 @@ void calculateNSE() {
     firstRecorrido.clear();
     secondRecorrido.clear();
 
-    cout << setprecision(4);
-    cout << getNSE(initialPoint, endPoint, nephilimTree) << "\n";
+    // cout << setprecision(4);
+    // cout << getNSE(initialPoint, endPoint, nephilimTree) << "\n";
 
     counter++;
   }
@@ -125,10 +125,10 @@ void calculateNSE() {
 int main() {
   int numberTestCase;
 
-  cout << "Ingrese el numbero de casos: "
+  cout << "Ingrese el numbero de casos: ";
   cin >> numberTestCase;
 
-  calculateNSE();
+  calculateNSE(numberTestCase);
 
   return 0;
 }
