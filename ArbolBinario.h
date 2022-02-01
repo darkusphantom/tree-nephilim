@@ -96,6 +96,32 @@ class ArbolBinario
 		double operador( double valor1, double valor2, tipo signo );//toma un operador char y realiza la operacion
 
 		void surdo( NodoA<tipo>* nodoActual, bool &esSurdo );//recorre y compara la altura de las ramas para saber si el arbol es surdo
+
+		int calculatePath(Nodo<tipo>* raiz, Nodo<tipo>* puntoInicial, Nodo<tipo>* puntoFinal, bool estaCompletado) {
+			int valor;
+
+			if(raiz == puntoInicial || raiz == puntoFinal) {
+				return 1;
+			} else if (raiz == NULL) {
+				return 0;
+			}
+
+			int valorIzquierdo = calculatePath(raiz.hijoIzquierdo, puntoInicial, puntoFinal);
+			int valorDerecho = calculatePath(raiz.hijoDerecho, puntoInicial, puntoFinal);
+
+			if (valorIzquierdo * valorDerecho != 0 || valor * valorIzquierdo != 0 || valor * valorDerecho != 0){
+				return estaCompletado;
+			}
+			else if( valorDerecho != 0 || valorIzquierdo != 0 || valor != 0){
+				if (estaCompletado) {
+					return valorDerecho + valorIzquierdo;
+				} else {
+					return valorIzquierdo + valorDerecho + 1;
+				}
+			}
+
+			return 0;
+		}
 };
 
 template <class tipo>

@@ -6,67 +6,129 @@
 
 using namespace std;
 
-void extraerEntradas(string principalString, string& initialNode, string& endingNode) {
-  int amountPositionToSeparte = principalString.find(" ");
-  initialNode = principalString.substr(0, amountPositionToSeparte);
-  endingNode = principalString.substr(amountPositionToSeparte + 1);
-}
+// void extraerEntradas(string principalString, string& initialNode, string& endingNode) {
+//   int amountPositionToSeparte = principalString.find(" ");
+//   initialNode = principalString.substr(0, amountPositionToSeparte);
+//   endingNode = principalString.substr(amountPositionToSeparte + 1);
+// }
 
-void extraerLista(string filelineData, list<string> &linkedListToTree, string &typeRecorridoTree) {
-  int amountSpace = filelineData.find(" ");
-  int nextElement = 0;
+// void extraerLista(string filelineData, list<string> &linkedListToTree, string &typeRecorridoTree) {
+//   int amountSpace = filelineData.find(" ");
+//   int nextElement = 0;
 
-  typeRecorridoTree = filelineData.substr(0, amountSpace);
-  nextElement = amountSpace + 1;
-  amountSpace = filelineData.find(" ", nextElement);
+//   typeRecorridoTree = filelineData.substr(0, amountSpace);
+//   nextElement = amountSpace + 1;
+//   amountSpace = filelineData.find(" ", nextElement);
 
-  while(amountSpace != -1) {
-    linkedListToTree.push_back(filelineData.substr(nextElement, amountSpace - nextElement));
-    nextElement = amountSpace + 1;
-    amountSpace = filelineData.find(" ", nextElement);
+//   while(amountSpace != -1) {
+//     linkedListToTree.push_back(filelineData.substr(nextElement, amountSpace - nextElement));
+//     nextElement = amountSpace + 1;
+//     amountSpace = filelineData.find(" ", nextElement);
+//   }
+// }
+
+// void readData(list<string> &originalList) {
+//   int testCase;
+
+//   // cout << "Ingrese la cantidad de casos de prueba:" << endl;
+//   // cin >> testCase;
+//   // cin.ignore();
+//   // cout << "\n";
+
+//   string fileline, filelineData;
+//   string initialNode, endingNode;
+//   string typeRecorrido, auxTypeRecorrido;
+//   list<string> primaryList, secundaryList;
+
+//   int counter; //counter < testcase
+//   for (counter = 0; counter < 2; counter++) {
+//     cout << "Ingrese el punto de partida y el punto final del recorrido:" << endl;
+//     getline(cin, fileline);
+//     extraerEntradas(fileline, initialNode, endingNode);
+//     cout << "\n";
+
+//     cout << "1. Ingrese una el tipo de recorrido y los datos añadir a la lista:" << endl;
+//     getline(cin, filelineData);
+//     extraerLista(filelineData, primaryList, auxTypeRecorrido);
+//     typeRecorrido = auxTypeRecorrido;
+//     cout << "\n";
+
+//     cout << "2. Ingrese una el tipo de recorrido y los datos añadir a la lista:" << endl;
+//     getline(cin, fileline);
+//     extraerLista(fileline, secundaryList, auxTypeRecorrido);
+//     cout << "\n";
+
+//     cout << initialNode << " "<< endingNode << " " << auxTypeRecorrido;
+//     cout <<  " " << primaryList.front() << " " << primaryList.back();  // PARA TESTEAR
+//   }
+
+// }
+
+
+void setDataInList(list<string> &linkedList) {
+  string fileline;
+  bool endline;
+
+  cout << "Ingrese los datos para añadir a la lista:" << "\n";
+  cin.ignore();
+  while(!endline && cin >> fileline) {
+    if (cin.peek() == '\n') {
+      endline == true;
+    }
+    linkedList.push_back(fileline);
   }
 }
 
-void readData(list<string> &originalList) {
-  int testCase;
+float getNSE(int initialPoint, int endPoint, ArbolBinario<string> nephilimTree) {
+  float valueNSE;
+  bool isComplete=false;
 
-  // cout << "Ingrese la cantidad de casos de prueba:" << endl;
-  // cin >> testCase;
-  // cin.ignore();
-  // cout << "\n";
+  return valueNSE = nephilimTree->calculatePath(nephilimTree->raiz, initialPoint, endPoint, isComplete);
+}
 
-  string fileline, filelineData;
-  string initialNode, endingNode;
-  list<string> secundaryList;
+void calculateNSE() {
+  int counter=0;
 
-  int counter; //counter < testcase
-  for (counter = 0; counter < 2; counter++) {
-    cout << "Ingrese el punto de partida y el punto final del recorrido:" << endl;
-    getline(cin, fileline);
-    extraerEntradas(fileline, initialNode, endingNode);
-    cout << "\n";
+  while(counter < numberTestCase) {
+    string typeRecorrido, typeRecorrido2, initialPoint, endPoint;
 
-    for (int i = 0; i < 2; ++i) {
-      string typeRecorrido;
-      cout << "Ingrese una el tipo de recorrido y los datos añadir a la lista:" << endl;
-      getline(cin, fileline);
-      extraerLista(filelineData, originalList, typeRecorrido);
-      secundaryList.push_back(typeRecorrido);
-      cout << "\n";
+    cout << "Ingrese el tipo de recorrido:" << "\n";
+    cin >> typeRecorrido;
+
+    list<string> firstRecorrido, secondRecorrido;
+    setDataInList(firstRecorrido);
+    setDataInList(secondRecorrido);
+
+    cout << "\n\n";
+    typeRecorrido = convertToUpper(typeRecorrido);
+
+    ArbolBinario<string> *nephilimTree = new ArbolBinario<string>;
+    if (typeRecorrido == "PREORDEN") {
+      cout << "Creando arbol preorden - inorden...." << "\n";
+      nephilimTree->preordenInorden(firstRecorrido, secondRecorrido);
+    } else if (typeRecorrido == "POSTORDEN") {
+      cout << "Creando arbol postorden - inorden...." << "\n";
+      nephilimTree->postordenInorden(firstRecorrido, secondRecorrido);
     }
 
-    showElementsInList(originalList);
-    showElementsInList(secundaryList);
-    cout << "\n";
+    firstRecorrido.clear();
+    secondRecorrido.clear();
+
+    cout << setprecision(4);
+    cout << getNSE(initialPoint, endPoint, nephilimTree) << "\n";
+
+    counter++;
   }
 }
-
 
 
 int main() {
-  list<string> inputList;
+  int numberTestCase;
 
-  readData(inputList);
+  cout << "Ingrese el numbero de casos: "
+  cin >> numberTestCase;
+
+  calculateNSE();
 
   return 0;
 }
