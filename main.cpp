@@ -6,51 +6,89 @@
 
 using namespace std;
 
-void extraerEntradas(string cadenaBase, string& a, string& b) {
-  int posSeparacion = cadenaBase.find(" ");  // enconrtamos el espacio que separa los casos
-  a = cadenaBase.substr(0,posSeparacion); // extraemos a y b para hallar el recorrido
-  b = cadenaBase.substr(posSeparacion + 1);
+void extraerEntradas(string principalString, string& initialNode, string& endingNode) {
+  int amountPositionToSeparte = principalString.find(" ");
+  initialNode = principalString.substr(0, amountPositionToSeparte);
+  endingNode = principalString.substr(amountPositionToSeparte + 1);
 }
 
-void extraerLista(string cadenaDeLista, list<string> &listaParaArbol, string &modoDeCreacion) {
-  int contEspacio = cadenaDeLista.find(" "); // con esto conseguimos el modo de creacion, y luego los otros espacios por elemento
-  int siguienteElemento = 0;
+void extraerLista(string cadenaDeLista, list<string> &listaParaArbol, string &typeRecorridoTree) {
+  int contEspacio = cadenaDeLista.find(" ");
+  int nextElement = 0;
 
-  modoDeCreacion = cadenaDeLista.substr(0, contEspacio); // obtenemos  PREORDEN, INORDEN o POSTORDEN
-  siguienteElemento = contEspacio + 1; // en terminos de la cadena pasamos al caracter despues del espacio
-  contEspacio = cadenaDeLista.find(" ", siguienteElemento);
-  //cout << cadenaDeLista.at(siguienteElemento) << contEspacio;
+  typeRecorridoTree = cadenaDeLista.substr(0, contEspacio);
+  nextElement = contEspacio + 1;
+  contEspacio = cadenaDeLista.find(" ", nextElement);
+
   while(contEspacio != -1) {
-    //cout << "(" << cadenaDeLista.substr(siguienteElemento, siguienteElemento + contEspacio) << ")";
-    listaParaArbol.push_back(cadenaDeLista.substr(siguienteElemento, contEspacio - siguienteElemento));// obtenemos un elemento de la lista
-    siguienteElemento = contEspacio + 1; // pasamos al caracter despues del espacio
-    contEspacio = cadenaDeLista.find(" ", siguienteElemento); // leemos el proximo espacio
+    //cout << "(" << cadenaDeLista.substr(nextElement, nextElement + contEspacio) << ")";
+    //string element =
+    listaParaArbol.push_back(cadenaDeLista.substr(nextElement, contEspacio - nextElement));// obtenemos un elemento de la lista
+    nextElement = contEspacio + 1;
+    contEspacio = cadenaDeLista.find(" ", nextElement);
   }
 }
+
 
 
 int main() {
-  int casos, contador;
-  string entrada, listas; // entrada para elemento, entrada para listas
-  string a, b, aux, modoDeCreacion;
-  list<string> listaPrePost, listaIn;
+  int testCase;
 
-  cin >> casos;
+  cout << "Ingrese la cantidad de casos de prueba:" << endl;
+  cin >> testCase;
   cin.ignore();
+  cout << "\n";
 
-  for (contador = 1; contador <= casos; contador++) {
-    getline(cin, entrada); // leo elementos a y b;
-    extraerEntradas(entrada, a, b); // asigno a y b a variables
-    getline(cin, listas); // leo la lista 1;
-    extraerLista(listas, listaPrePost, aux); // Extraigo la lista 1
-    modoDeCreacion = aux; // aquí se asigna como se construye el arbol
-    getline(cin, entrada); // leo la lista 2 (ultima linea de entrada)
-    extraerLista(listas, listaInorden, aux); // ahora extraemos la lista inorden , ya no nos interesa el modo
-    getline(cin, entrada); // aqui se lee el espacio entre casos
-    //cout << a << " "<< b << " " << aux <<  " " << listaPrePost.front() << " " << listaPrePost.back();  // PARA TESTEAR
+  string elementInput, listInput;
+  string initialNode, endingNode, aux;
+  list<string> secundaryList, firstList;
+
+  int contador;
+  for (contador = 1; contador <= testCase; contador++) {
+    cout << "Ingrese el punto de partida y el punto final del recorrido:" << endl;
+    getline(cin, elementInput);
+    extraerEntradas(elementInput, initialNode, endingNode);
+    cout << "\n";
+
+    string firstTypeRecorrido;
+    cout << "Ingresa la primera lista con el tipo de recorrido y la cantidad de nodos:" << endl;
+    getline(cin, elementInput);
+    extraerLista(listInput, firstList, firstTypeRecorrido);
+    cout << "\n";
+
+    string secundaryTypeRecorrido;
+    cout << "Ingresa la segunda lista con el tipo de recorrido y la cantidad de nodos:" << endl;
+    getline(cin, listInput);
+    extraerLista(listInput, secundaryList, secundaryTypeRecorrido);
+    cout << "\n";
+
+    cout << "Presione enter para continuar:" << endl;
+    getline(cin, elementInput);
+
+    //Testing
+    cout << initialNode << " "<< endingNode << endl;
+    cout << firstTypeRecorrido <<  " " << firstList.front() << endl;
+    cout << secundaryTypeRecorrido << secundaryList.front() << endl;
+
+
+    cout << "\n";
   }
   return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // void readData(T &data, string info) {
 //   cout << "Ingrese " << info << " : " << endl;
